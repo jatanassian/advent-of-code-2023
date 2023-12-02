@@ -27,12 +27,35 @@ readFile('./data.txt', { encoding: 'utf8' }, (err, data) => {
 		result += Number(firstNumber + lastNumber);
 	});
 
-	console.log(result);
+	console.log('[PART 1] Result:', result);
 });
 
 ///////////////////////////////////////////////////////////////////
 // PART TWO
 ///////////////////////////////////////////////////////////////////
+
+/**
+ * Find what the number is from the possible letters combinations
+ *
+ * @param {string} threeLetters
+ * @param {string} fourLetters
+ * @param {string} fiveLetters
+ * @returns {string | undefined}
+ */
+const lettersToNumber = (threeLetters, fourLetters, fiveLetters) => {
+	if (threeLetters === 'one') return '1';
+	if (threeLetters === 'two') return '2';
+	if (fiveLetters === 'three') return '3';
+	if (fourLetters === 'four') return '4';
+	if (fourLetters === 'five') return '5';
+	if (threeLetters === 'six') return '6';
+	if (fiveLetters === 'seven') return '7';
+	if (fiveLetters === 'eight') return '8';
+	if (fourLetters === 'nine') return '9';
+
+	return undefined;
+};
+
 readFile('./data.txt', { encoding: 'utf8' }, (err, data) => {
 	const rows = data.split('\n');
 
@@ -54,36 +77,24 @@ readFile('./data.txt', { encoding: 'utf8' }, (err, data) => {
 			}
 
 			// If NaN, check if lettered number
-			const threeLettersNumber = character + row[i + 1] + row[i + 2];
-			const fourLettersNumber =
-				character + row[i + 1] + row[i + 2] + row[i + 3];
-			const fiveLettersNumber =
+			const threeLetters = character + row[i + 1] + row[i + 2];
+			const fourLetters = character + row[i + 1] + row[i + 2] + row[i + 3];
+			const fiveLetters =
 				character + row[i + 1] + row[i + 2] + row[i + 3] + row[i + 4];
 
-			if (!firstNumber) {
-				threeLettersNumber === 'one' && (firstNumber = '1');
-				threeLettersNumber === 'two' && (firstNumber = '2');
-				fiveLettersNumber === 'three' && (firstNumber = '3');
-				fourLettersNumber === 'four' && (firstNumber = '4');
-				fourLettersNumber === 'five' && (firstNumber = '5');
-				threeLettersNumber === 'six' && (firstNumber = '6');
-				fiveLettersNumber === 'seven' && (firstNumber = '7');
-				fiveLettersNumber === 'eight' && (firstNumber = '8');
-				fourLettersNumber === 'nine' && (firstNumber = '9');
-			}
-			threeLettersNumber === 'one' && (lastNumber = '1');
-			threeLettersNumber === 'two' && (lastNumber = '2');
-			fiveLettersNumber === 'three' && (lastNumber = '3');
-			fourLettersNumber === 'four' && (lastNumber = '4');
-			fourLettersNumber === 'five' && (lastNumber = '5');
-			threeLettersNumber === 'six' && (lastNumber = '6');
-			fiveLettersNumber === 'seven' && (lastNumber = '7');
-			fiveLettersNumber === 'eight' && (lastNumber = '8');
-			fourLettersNumber === 'nine' && (lastNumber = '9');
-		}
+			const numberFromLetters = lettersToNumber(
+				threeLetters,
+				fourLetters,
+				fiveLetters
+			);
 
+			if (!firstNumber) {
+				numberFromLetters && (firstNumber = numberFromLetters);
+			}
+			numberFromLetters && (lastNumber = numberFromLetters);
+		}
 		result += Number(firstNumber + lastNumber);
 	});
 
-	console.log(result);
+	console.log('[PART 2] Result:', result);
 });
