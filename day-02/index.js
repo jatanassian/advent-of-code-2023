@@ -38,7 +38,7 @@ readFile('./data.txt', { encoding: 'utf-8' }, (error, data) => {
 		}
 	});
 
-	console.log(result);
+	console.log('[PART 1] Result:', result);
 });
 
 ////////////////////////////////////////////////////////////
@@ -58,7 +58,6 @@ readFile('./data.txt', { encoding: 'utf-8' }, (error, data) => {
 			const colorsBySet = set.split(',');
 
 			colorsBySet.forEach(colorInSet => {
-				console.log(colorInSet);
 				const [quantity, color] = colorInSet.trim().split(' ');
 
 				// If no quantity for that color, add property to object
@@ -75,5 +74,5 @@ readFile('./data.txt', { encoding: 'utf-8' }, (error, data) => {
 		result += power;
 	});
 
-	console.log(result);
+	console.log('[PART 2] Result:', result);
 });
