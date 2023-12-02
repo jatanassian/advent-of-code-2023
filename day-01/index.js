@@ -1,5 +1,38 @@
 const { readFile } = require('fs');
 
+///////////////////////////////////////////////////////////////////
+// PART ONE
+///////////////////////////////////////////////////////////////////
+readFile('./data.txt', { encoding: 'utf8' }, (err, data) => {
+	const rows = data.split('\n');
+
+	let result = 0;
+
+	rows.forEach(row => {
+		let firstNumber;
+		let lastNumber;
+
+		for (let i = 0; i < row.length; i++) {
+			const character = row[i];
+
+			// If current character is a number
+			if (!isNaN(character)) {
+				if (!firstNumber) {
+					firstNumber = character;
+				}
+				lastNumber = character;
+			}
+		}
+
+		result += Number(firstNumber + lastNumber);
+	});
+
+	console.log(result);
+});
+
+///////////////////////////////////////////////////////////////////
+// PART TWO
+///////////////////////////////////////////////////////////////////
 readFile('./data.txt', { encoding: 'utf8' }, (err, data) => {
 	const rows = data.split('\n');
 
@@ -20,8 +53,6 @@ readFile('./data.txt', { encoding: 'utf8' }, (err, data) => {
 				lastNumber = character;
 			}
 
-			///////////////////////////////////////////////////////////////////
-			// PART TWO ONLY
 			// If NaN, check if lettered number
 			const threeLettersNumber = character + row[i + 1] + row[i + 2];
 			const fourLettersNumber =
@@ -50,8 +81,6 @@ readFile('./data.txt', { encoding: 'utf8' }, (err, data) => {
 			fiveLettersNumber === 'eight' && (lastNumber = '8');
 			fourLettersNumber === 'nine' && (lastNumber = '9');
 		}
-		// END OF PART 2 ONLY
-		///////////////////////////////////////////////////////////////////
 
 		result += Number(firstNumber + lastNumber);
 	});
